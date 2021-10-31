@@ -1,26 +1,72 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Contract } from 'starknet';
 import './App.css';
+import { useCounterContract } from './lib/counter';
+import { useStarknetCall, useStarknetInvoke } from './lib/hooks';
+import { BlockNumberProvider, useBlockNumber } from './providers/BlockNumberProvider';
+import { TransactionsProvider, useTransaction, useTransactions} from './providers/TransactionsProvider'
+
+
+function IncrementCounter({ contract }: { contract?: Contract }) {
+  const {invoke: incrementCounter, hash: transactionHash} = useStarknetInvoke(contract, 'incrementCounter')
+  const transactionStatus = useTransaction(transactionHash)
+
+  const [amount, setAmount] = React.useState('0x1')
+
+  const updateAmount = React.useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(evt.target.value)
+  }, [setAmount])
+
+  return (
+    <div>
+      <input onChange={updateAmount} value={amount} type="text" />
+      <button onClick={() => incrementCounter && incrementCounter({ amount })} disabled={!incrementCounter}>Increment</button>
+      <p>{transactionHash}</p>
+      <p>{transactionStatus?.code}</p>
+    </div>
+  )
+}
 
 function App() {
+  const blockNumber = useBlockNumber()
+  const counterContract = useCounterContract()
+  const counter = useStarknetCall(counterContract, 'counter')
+
+  const {transactions} = useTransactions()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BlockNumberProvider>
+      <div className="App">
+        Current Block: {blockNumber}
+      </div>
+      <div className="App">
+        Counter Address: {counterContract?.connectedTo}
+      </div>
+      <div className="App">
+        Current Counter: {counter}
+      </div>
+      <div className="App">
+        <IncrementCounter contract={counterContract} />
+      </div>
+      <div className="App">
+        <p>Transactions:</p>
+        <ul>
+          {transactions.map((tx, idx) => (
+            <li key={idx}>{tx.hash} {tx.code}</li>
+          ))}
+        </ul>
+      </div>
+    </BlockNumberProvider>
   );
 }
 
-export default App;
+function AppWithProviders() {
+  return (
+    <BlockNumberProvider>
+      <TransactionsProvider>
+        <App />
+      </TransactionsProvider>
+    </BlockNumberProvider>
+  );
+}
+export default AppWithProviders;
