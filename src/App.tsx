@@ -52,7 +52,11 @@ function App() {
         <p>Transactions:</p>
         <ul>
           {transactions.map((tx, idx) => (
-            <li key={idx}>{tx.hash} {tx.code}</li>
+            <li key={idx}>
+              <a href={`https://voyager.online/tx/${tx.hash}`}>
+                {tx.hash} {tx.code}
+              </a>
+            </li>
           ))}
         </ul>
       </div>
