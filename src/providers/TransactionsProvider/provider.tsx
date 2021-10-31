@@ -1,5 +1,6 @@
 import React from 'react'
 import { AddTransactionResponse, getTransactionStatus } from 'starknet'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useBlockNumber } from '../BlockNumberProvider'
 
 import { TransactionsContext } from './context'
@@ -21,7 +22,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps): J
         })
     }, [dispatch])
 
-    React.useEffect(() => {
+    useDeepCompareEffect(() => {
         const updateTransactions = async () => {
             if (!blockNumber) {
                 return
@@ -66,7 +67,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps): J
         }
 
         updateTransactions()
-    }, [blockNumber])
+    }, [blockNumber, transactions])
 
     return <TransactionsContext.Provider value={{transactions, addTransaction}} children={children} />
 }
