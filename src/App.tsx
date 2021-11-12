@@ -1,36 +1,40 @@
-import React from 'react';
-import './App.css';
-import { useCounterContract } from './lib/counter';
-import { useStarknetCall } from './lib/hooks';
-import { BlockNumberProvider, useBlockNumber } from './providers/BlockNumberProvider';
-import { StarknetProvider } from './providers/StarknetProvider';
-import { TransactionsProvider, useTransactions} from './providers/TransactionsProvider'
-import { ConnectedOnly } from './components/ConnectedOnly'
-import { IncrementCounter } from './components/IncrementCounter'
-import { VoyagerLink } from './components/VoyagerLink'
-
+import React from "react";
+import "./App.css";
+import { useCounterContract } from "./lib/counter";
+import { useStarknetCall } from "./lib/hooks";
+import {
+  BlockNumberProvider,
+  useBlockNumber,
+} from "./providers/BlockNumberProvider";
+import { StarknetProvider } from "./providers/StarknetProvider";
+import {
+  TransactionsProvider,
+  useTransactions,
+} from "./providers/TransactionsProvider";
+import { ConnectedOnly } from "./components/ConnectedOnly";
+import { IncrementCounter } from "./components/IncrementCounter";
+import { VoyagerLink } from "./components/VoyagerLink";
 
 function App() {
-  const blockNumber = useBlockNumber()
-  const counterContract = useCounterContract()
-  const counter = useStarknetCall(counterContract, 'counter')
+  const blockNumber = useBlockNumber();
+  const counterContract = useCounterContract();
+  const counter = useStarknetCall(counterContract, "counter");
 
-  const {transactions} = useTransactions()
+  const { transactions } = useTransactions();
 
   return (
     <div className="container">
       <div className="row">
-        Current Block: {blockNumber && <VoyagerLink.Block block={blockNumber} />}
+        Current Block:{" "}
+        {blockNumber && <VoyagerLink.Block block={blockNumber} />}
       </div>
       <div className="row">
-        Counter Address: {
-          counterContract?.connectedTo &&
+        Counter Address:{" "}
+        {counterContract?.connectedTo && (
           <VoyagerLink.Contract contract={counterContract?.connectedTo} />
-        }
+        )}
       </div>
-      <div className="row">
-        Current Counter: {counter}
-      </div>
+      <div className="row">Current Counter: {counter}</div>
       <div className="row">
         <ConnectedOnly>
           <IncrementCounter contract={counterContract} />

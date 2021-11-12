@@ -1,39 +1,42 @@
-import React from 'react'
-import { getStarknet } from '@argent/get-starknet'
-import { StarknetState  } from './model'
+import React from "react";
+import { getStarknet } from "@argent/get-starknet";
+import { StarknetState } from "./model";
 
 interface StarknetManagerState {
-    account?: string
+  account?: string;
 }
 
 interface SetAccount {
-    type: 'set_account',
-    account: string
+  type: "set_account";
+  account: string;
 }
 
-type Action = SetAccount
+type Action = SetAccount;
 
-function reducer(state: StarknetManagerState, action: Action): StarknetManagerState {
-    switch (action.type) {
-        case 'set_account': {
-            return { ...state, account: action.account }
-        }
-        default: {
-            return state
-        }
+function reducer(
+  state: StarknetManagerState,
+  action: Action
+): StarknetManagerState {
+  switch (action.type) {
+    case "set_account": {
+      return { ...state, account: action.account };
     }
+    default: {
+      return state;
+    }
+  }
 }
 
 export function useStarknetManager(): StarknetState {
-    const starknet = getStarknet({ showModal: false })
-    const [state, dispatch] = React.useReducer(reducer, {})
+  const starknet = getStarknet({ showModal: false });
+  const [state, dispatch] = React.useReducer(reducer, {});
 
-    const { account } = state
+  const { account } = state;
 
-    const connectBrowserWallet = React.useCallback(async () => {
-        const [account] = await starknet.enable()
-        dispatch({ type: 'set_account', account })
-    }, [starknet])
+  const connectBrowserWallet = React.useCallback(async () => {
+    const [account] = await starknet.enable();
+    dispatch({ type: "set_account", account });
+  }, [starknet]);
 
-    return { account, connectBrowserWallet }
+  return { account, connectBrowserWallet };
 }

@@ -1,13 +1,13 @@
 .connect {
-    border: none;
-    font-size: 1.5rem;
-    padding: 1rem 1.5rem;
-    border-radius: 2px;
-    cursor: pointer;
-    background-color: var(--primary-bg);
-    color: var(--primary-color);
+  border: none;
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: var(--primary-bg);
+  color: var(--primary-color);
 }
 
 .connect:hover {
-    background-color: var(--primary-bg-darker);
+  background-color: var(--primary-bg-darker);
 }

@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export const BlockNumberContext = React.createContext<number | undefined>(undefined)
+export const BlockNumberContext = React.createContext<number | undefined>(
+  undefined
+);
 
 export function useBlockNumber() {
-    return React.useContext(BlockNumberContext)
+  return React.useContext(BlockNumberContext);
 }
