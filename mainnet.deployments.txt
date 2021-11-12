@@ -1,0 +1,1 @@
+0x065db863a8d72f7260bdd438f7be7d14cc4778b7e362f82fc3b6b9eb04cb90b5:artifacts/abis/counter.json
