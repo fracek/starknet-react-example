@@ -1,6 +1,7 @@
 import React from "react";
 import { Contract } from "starknet";
 import { useBlockNumber } from "../providers/BlockNumberProvider";
+import { useStarknet } from "../providers/StarknetProvider";
 import { useTransactions } from "../providers/TransactionsProvider";
 
 export function useStarknetCall(
@@ -38,11 +39,12 @@ export function useStarknetInvoke(
   method: string | undefined
 ): StarknetInvoke {
   const { addTransaction } = useTransactions();
+  const { account } = useStarknet()
   const [invoke, setInvoke] = React.useState<InvokeFunc | undefined>(undefined);
   const [hash, setHash] = React.useState<string | undefined>(undefined);
 
   React.useEffect(() => {
-    if (contract && method) {
+    if (account && contract && method) {
       const invokeFunc = (args?: any) => {
         contract.invoke(method, args).then((transaction) => {
           const { transaction_hash } = transaction;

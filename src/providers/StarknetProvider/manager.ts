@@ -38,5 +38,5 @@ export function useStarknetManager(): StarknetState {
     dispatch({ type: "set_account", account });
   }, [starknet]);
 
-  return { account, connectBrowserWallet };
+  return { account, connectBrowserWallet, library: starknet.provider };
 }

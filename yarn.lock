@@ -10570,10 +10570,10 @@ stackframe@^1.1.1:
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.2.0.tgz#52429492d63c62eb989804c11552e3d22e779303"
   integrity sha512-GrdeshiRmS1YLMYgzF16olf2jJ/IzxXY9lhKOskuVziubpTYcYqyOwYeJKzQkwy7uN0fYSsbsC4RQaXf9LCrYA==
 
-starknet@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/starknet/-/starknet-1.5.0.tgz#ef3f86af2d1d1a7837d46e14a2753ce4ed345938"
-  integrity sha512-dG9M2xgrHXZepDFEMXM9zXrlbL8p0AR1titMyEofrWs6LPUZfKrWzfJhvRJxTnuGxM7wvaL04UDcebjJcpLe5g==
+starknet@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/starknet/-/starknet-1.6.0.tgz#2e2effab94221f9854f0a3b425e57fc7dae71dbb"
+  integrity sha512-TvjLorkiz8R5kDrfg+oEcQdt+uEeIlQFmC/vuqSO91HBUiV2hF6DbNdECGNbqzMzuUjP/BiyLNDr/P7XeDDM+A==
   dependencies:
     axios "^0.23.0"
     bn.js "^5.2.0"

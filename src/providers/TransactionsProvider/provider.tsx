@@ -1,7 +1,8 @@
 import React from "react";
-import { AddTransactionResponse, getTransactionStatus } from "starknet";
+import { AddTransactionResponse } from "starknet";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useBlockNumber } from "../BlockNumberProvider";
+import { useStarknet } from "../StarknetProvider";
 
 import { TransactionsContext } from "./context";
 import { StoredTransaction } from "./model";
@@ -14,6 +15,7 @@ interface TransactionsProviderProps {
 export function TransactionsProvider({
   children,
 }: TransactionsProviderProps): JSX.Element {
+  const { library } = useStarknet()
   const blockNumber = useBlockNumber();
   const [transactions, dispatch] = React.useReducer(transactionsReducer, []);
 
@@ -44,7 +46,7 @@ export function TransactionsProvider({
         }
 
         try {
-          const newStatus = await getTransactionStatus(tx.hash);
+          const newStatus = await library.getTransactionStatus(tx.hash);
           console.log(`new status ${newStatus.tx_status}`);
           const newTransaction: StoredTransaction = {
             ...tx,
