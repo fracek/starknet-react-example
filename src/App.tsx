@@ -1,31 +1,14 @@
 import React from 'react';
-import { Contract } from 'starknet';
 import './App.css';
 import { useCounterContract } from './lib/counter';
-import { useStarknetCall, useStarknetInvoke } from './lib/hooks';
+import { useStarknetCall } from './lib/hooks';
 import { BlockNumberProvider, useBlockNumber } from './providers/BlockNumberProvider';
-import { TransactionsProvider, useTransaction, useTransactions} from './providers/TransactionsProvider'
+import { StarknetProvider } from './providers/StarknetProvider';
+import { TransactionsProvider, useTransactions} from './providers/TransactionsProvider'
+import { ConnectedOnly } from './components/ConnectedOnly'
+import { IncrementCounter } from './components/IncrementCounter'
+import { VoyagerLink } from './components/VoyagerLink'
 
-
-function IncrementCounter({ contract }: { contract?: Contract }) {
-  const {invoke: incrementCounter, hash: transactionHash} = useStarknetInvoke(contract, 'incrementCounter')
-  const transactionStatus = useTransaction(transactionHash)
-
-  const [amount, setAmount] = React.useState('0x1')
-
-  const updateAmount = React.useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(evt.target.value)
-  }, [setAmount])
-
-  return (
-    <div>
-      <input onChange={updateAmount} value={amount} type="text" />
-      <button onClick={() => incrementCounter && incrementCounter({ amount })} disabled={!incrementCounter}>Increment</button>
-      <p>{transactionHash}</p>
-      <p>{transactionStatus?.code}</p>
-    </div>
-  )
-}
 
 function App() {
   const blockNumber = useBlockNumber()
@@ -35,42 +18,47 @@ function App() {
   const {transactions} = useTransactions()
 
   return (
-    <BlockNumberProvider>
-      <div className="App">
-        Current Block: {blockNumber}
+    <div className="container">
+      <div className="row">
+        Current Block: {blockNumber && <VoyagerLink.Block block={blockNumber} />}
       </div>
-      <div className="App">
-        Counter Address: {counterContract?.connectedTo}
+      <div className="row">
+        Counter Address: {
+          counterContract?.connectedTo &&
+          <VoyagerLink.Contract contract={counterContract?.connectedTo} />
+        }
       </div>
-      <div className="App">
+      <div className="row">
         Current Counter: {counter}
       </div>
-      <div className="App">
-        <IncrementCounter contract={counterContract} />
+      <div className="row">
+        <ConnectedOnly>
+          <IncrementCounter contract={counterContract} />
+        </ConnectedOnly>
       </div>
-      <div className="App">
+      <div className="row">
         <p>Transactions:</p>
         <ul>
           {transactions.map((tx, idx) => (
             <li key={idx}>
-              <a href={`https://voyager.online/tx/${tx.hash}`}>
-                {tx.hash} {tx.code}
-              </a>
+              <VoyagerLink.Transaction transactionHash={tx.hash} />
             </li>
           ))}
         </ul>
       </div>
-    </BlockNumberProvider>
+    </div>
   );
 }
 
 function AppWithProviders() {
   return (
-    <BlockNumberProvider>
-      <TransactionsProvider>
-        <App />
-      </TransactionsProvider>
-    </BlockNumberProvider>
+    <StarknetProvider>
+      <BlockNumberProvider>
+        <TransactionsProvider>
+          <App />
+        </TransactionsProvider>
+      </BlockNumberProvider>
+    </StarknetProvider>
   );
 }
 export default AppWithProviders;

@@ -1,0 +1,6 @@
+.link {
+    color: var(--primary-color);
+    background-color: var(--primary-bg);
+    padding: 0.2rem;
+    border-radius: 2px;
+}
