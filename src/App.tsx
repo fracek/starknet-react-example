@@ -19,6 +19,7 @@ function App() {
   const blockNumber = useBlockNumber();
   const counterContract = useCounterContract();
   const counter = useStarknetCall(counterContract, "counter");
+  const lastCaller = useStarknetCall(counterContract, "lastCaller");
 
   const { transactions } = useTransactions();
 
@@ -34,7 +35,8 @@ function App() {
           <VoyagerLink.Contract contract={counterContract?.connectedTo} />
         )}
       </div>
-      <div className="row">Current Counter: {counter}</div>
+      <div className="row">Current Counter: {counter?.count}</div>
+      <div className="row">Last Caller: {lastCaller?.address}</div>
       <div className="row">
         <ConnectedOnly>
           <IncrementCounter contract={counterContract} />

@@ -1,5 +1,6 @@
 import React from "react";
 import { Contract, Abi } from "starknet";
+import { useStarknet } from "../providers/StarknetProvider";
 
 import COUNTER from "./abi/counter.json";
 
@@ -14,13 +15,14 @@ const ADDRESS =
  * @returns The `counter` contract or undefined.
  */
 export function useCounterContract(): Contract | undefined {
+  const { library } = useStarknet();
   const [contract, setContract] = React.useState<Contract | undefined>(
     undefined
   );
 
   React.useEffect(() => {
-    setContract(new Contract(COUNTER as Abi[], ADDRESS));
-  }, []);
+    setContract(new Contract(COUNTER as Abi[], ADDRESS, library));
+  }, [library]);
 
   return contract;
 }

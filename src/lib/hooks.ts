@@ -1,5 +1,5 @@
 import React from "react";
-import { Contract } from "starknet";
+import { Args, Contract } from "starknet";
 import { useBlockNumber } from "../providers/BlockNumberProvider";
 import { useStarknet } from "../providers/StarknetProvider";
 import { useTransactions } from "../providers/TransactionsProvider";
@@ -8,15 +8,13 @@ export function useStarknetCall(
   contract: Contract | undefined,
   method: string | undefined,
   args?: any
-): string | string[] | undefined {
-  const [value, setValue] = React.useState<string | string[] | undefined>(
-    undefined
-  );
+): Args | undefined {
+  const [value, setValue] = React.useState<Args | undefined>(undefined);
   const blockNumber = useBlockNumber();
 
   const callContract = React.useCallback(async () => {
     if (contract && method) {
-      contract.call(method, args).then(({ count }) => setValue(count));
+      contract.call(method, args).then((res) => setValue(res));
     }
   }, [contract, method, args]);
 
@@ -32,6 +30,7 @@ type InvokeFunc = (args?: any) => void;
 interface StarknetInvoke {
   invoke?: InvokeFunc;
   hash?: string;
+  submitting: boolean;
 }
 
 export function useStarknetInvoke(
@@ -39,24 +38,32 @@ export function useStarknetInvoke(
   method: string | undefined
 ): StarknetInvoke {
   const { addTransaction } = useTransactions();
-  const { account } = useStarknet()
+  const { account } = useStarknet();
   const [invoke, setInvoke] = React.useState<InvokeFunc | undefined>(undefined);
   const [hash, setHash] = React.useState<string | undefined>(undefined);
+  const [submitting, setSubmitting] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (account && contract && method) {
       const invokeFunc = (args?: any) => {
-        contract.invoke(method, args).then((transaction) => {
-          const { transaction_hash } = transaction;
-          setHash(transaction_hash);
-          addTransaction(transaction);
-        });
+        setSubmitting(true);
+        try {
+          contract.invoke(method, args).then((transaction) => {
+            const { transaction_hash } = transaction;
+            setHash(transaction_hash);
+            setSubmitting(false);
+            addTransaction(transaction);
+          });
+        } catch (err) {
+          setSubmitting(false);
+          setHash(undefined);
+        }
       };
       setInvoke(() => invokeFunc);
     } else {
       setInvoke(undefined);
     }
-  }, [contract, method, addTransaction]);
+  }, [account, contract, method, addTransaction]);
 
-  return { invoke, hash };
+  return { invoke, hash, submitting };
 }

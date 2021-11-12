@@ -9,11 +9,12 @@ import styles from "./index.module.css";
 
 export function IncrementCounter({ contract }: { contract?: Contract }) {
   const { account } = useStarknet();
-  const { invoke: incrementCounter, hash: transactionHash } = useStarknetInvoke(
-    contract,
-    "incrementCounter"
-  );
-  const transactionStatus = useTransaction(transactionHash);
+  const {
+    invoke: incrementCounter,
+    hash,
+    submitting,
+  } = useStarknetInvoke(contract, "incrementCounter");
+  const transactionStatus = useTransaction(hash);
 
   const [amount, setAmount] = React.useState("0x1");
 
@@ -36,17 +37,17 @@ export function IncrementCounter({ contract }: { contract?: Contract }) {
         <input onChange={updateAmount} value={amount} type="text" />
         <button
           onClick={() => incrementCounter && incrementCounter({ amount })}
-          disabled={!incrementCounter}
+          disabled={!incrementCounter || submitting}
         >
           Increment
         </button>
       </div>
-      {transactionStatus && transactionHash && (
+      {transactionStatus && hash && (
         <div className="row">
           <h2>Latest Transaction</h2>
           <p>Status: {transactionStatus?.code}</p>
           <p>
-            Hash: <VoyagerLink.Transaction transactionHash={transactionHash} />
+            Hash: <VoyagerLink.Transaction transactionHash={hash} />
           </p>
         </div>
       )}
