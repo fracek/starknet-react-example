@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@argent/get-starknet@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@argent/get-starknet/-/get-starknet-0.1.1.tgz#d6efee8e9d2298b3495285959012ec69c5d75f4d"
-  integrity sha512-81LE3HPChomN3YdomF706asw7GOxkWsaf1PusBOgNVPxgbjK0QOgOXwjF/whXndk6JybH+2Yy3QFQR8Sh3Dotw==
+"@argent/get-starknet@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@argent/get-starknet/-/get-starknet-0.1.3.tgz#c4f4599f5701c35d7ea1a20c16710f57daa3cd4d"
+  integrity sha512-OqnklHJlFFYx4vbGH6z9Xqchhw/Ryb7xV9L1XlJ3V+lWSjCmv0FsFgNH9J9WgEePem0gc28fFTk+Vpt5M5Xl7g==
 
 "@babel/code-frame@7.10.4":
   version "7.10.4"
@@ -10570,10 +10570,10 @@ stackframe@^1.1.1:
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.2.0.tgz#52429492d63c62eb989804c11552e3d22e779303"
   integrity sha512-GrdeshiRmS1YLMYgzF16olf2jJ/IzxXY9lhKOskuVziubpTYcYqyOwYeJKzQkwy7uN0fYSsbsC4RQaXf9LCrYA==
 
-starknet@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/starknet/-/starknet-1.6.0.tgz#2e2effab94221f9854f0a3b425e57fc7dae71dbb"
-  integrity sha512-TvjLorkiz8R5kDrfg+oEcQdt+uEeIlQFmC/vuqSO91HBUiV2hF6DbNdECGNbqzMzuUjP/BiyLNDr/P7XeDDM+A==
+starknet@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/starknet/-/starknet-2.2.0.tgz#cca5716d0749663e7b3b9068f0966de0e753e231"
+  integrity sha512-a1IV3/FfV4aGB97Vi63eB9jMRM2RS/MDLCw28XJLkReAIOzSeFZWsNSKGho25rJJ+WZ48ABsQygDPGalKu8k+A==
   dependencies:
     axios "^0.23.0"
     bn.js "^5.2.0"
@@ -10583,6 +10583,7 @@ starknet@^1.6.0:
     json-bigint "^1.0.0"
     minimalistic-assert "^1.0.1"
     pako "^2.0.4"
+    url-join "^4.0.1"
 
 static-extend@^0.1.1:
   version "0.1.2"
@@ -11368,6 +11369,11 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+url-join@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
+  integrity sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
 
 url-loader@4.1.1:
   version "4.1.1"

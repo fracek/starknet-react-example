@@ -3,9 +3,9 @@ import "./App.css";
 import { useCounterContract } from "./lib/counter";
 import { useStarknetCall } from "./lib/hooks";
 import {
-  BlockNumberProvider,
-  useBlockNumber,
-} from "./providers/BlockNumberProvider";
+  BlockHashProvider,
+  useBlockHash,
+} from "./providers/BlockHashProvider";
 import { StarknetProvider } from "./providers/StarknetProvider";
 import {
   TransactionsProvider,
@@ -16,13 +16,14 @@ import { IncrementCounter } from "./components/IncrementCounter";
 import { VoyagerLink } from "./components/VoyagerLink";
 
 function App() {
-  const blockNumber = useBlockNumber();
+  const blockNumber = useBlockHash();
   const counterContract = useCounterContract();
   const counter = useStarknetCall(counterContract, "counter");
   const lastCaller = useStarknetCall(counterContract, "lastCaller");
 
   const { transactions } = useTransactions();
 
+  console.log(blockNumber)
   return (
     <div className="container">
       <div className="row">
@@ -59,11 +60,11 @@ function App() {
 function AppWithProviders() {
   return (
     <StarknetProvider>
-      <BlockNumberProvider>
+      <BlockHashProvider>
         <TransactionsProvider>
           <App />
         </TransactionsProvider>
-      </BlockNumberProvider>
+      </BlockHashProvider>
     </StarknetProvider>
   );
 }

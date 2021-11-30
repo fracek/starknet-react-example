@@ -1,6 +1,6 @@
 import React from "react";
 import { Args, Contract } from "starknet";
-import { useBlockNumber } from "../providers/BlockNumberProvider";
+import { useBlockHash } from "../providers/BlockHashProvider";
 import { useStarknet } from "../providers/StarknetProvider";
 import { useTransactions } from "../providers/TransactionsProvider";
 
@@ -10,7 +10,7 @@ export function useStarknetCall(
   args?: any
 ): Args | undefined {
   const [value, setValue] = React.useState<Args | undefined>(undefined);
-  const blockNumber = useBlockNumber();
+  const blockNumber = useBlockHash();
 
   const callContract = React.useCallback(async () => {
     if (contract && method) {

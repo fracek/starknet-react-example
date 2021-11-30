@@ -23,7 +23,7 @@ export function transactionsReducer(
         hash: action.payload.transaction_hash,
         code: action.payload.code,
         address: action.payload.address,
-        lastChecked: 0,
+        lastChecked: '',
       };
       return [storedTx, ...state];
     }

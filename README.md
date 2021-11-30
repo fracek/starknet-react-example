@@ -11,8 +11,8 @@ The `contracts` directory contains a simple Cairo contract:
  * `incrementCounter(amount)`: increment the counter by the given amount.
  * `counter()`: returns the current counter value.
 
-The contract is deployed at [`0x5ee069079158344aef3526153db4ba7a3e39481a285059f21c34c4592ed5b2d`](https://voyager.online/contract/0x5ee069079158344aef3526153db4ba7a3e39481a285059f21c34c4592ed5b2d)
-on StarkNet alpha 3.
+The contract is deployed at [`0x036486801b8f42e950824cba55b2df8cccb0af2497992f807a7e1d9abd2c6ba1`](https://goerli.voyager.online/contract/0x036486801b8f42e950824cba55b2df8cccb0af2497992f807a7e1d9abd2c6ba1)
+on StarkNet alpha 4.
 
 ### React
 

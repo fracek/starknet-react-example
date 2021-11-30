@@ -3,8 +3,8 @@ import { AddTransactionResponse, Status, TxStatus } from "starknet";
 export interface StoredTransaction {
   code: TxStatus | Status;
   hash: string;
-  address: string;
-  lastChecked: number;
+  address?: string;
+  lastChecked: string;
 }
 
 export type StoredTransactionsState = StoredTransaction[];

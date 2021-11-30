@@ -1,7 +1,7 @@
 import React from "react";
 import { AddTransactionResponse } from "starknet";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useBlockNumber } from "../BlockNumberProvider";
+import { useBlockHash } from "../BlockHashProvider";
 import { useStarknet } from "../StarknetProvider";
 
 import { TransactionsContext } from "./context";
@@ -16,7 +16,7 @@ export function TransactionsProvider({
   children,
 }: TransactionsProviderProps): JSX.Element {
   const { library } = useStarknet()
-  const blockNumber = useBlockNumber();
+  const blockHash = useBlockHash();
   const [transactions, dispatch] = React.useReducer(transactionsReducer, []);
 
   const addTransaction = React.useCallback(
@@ -31,7 +31,7 @@ export function TransactionsProvider({
 
   useDeepCompareEffect(() => {
     const updateTransactions = async () => {
-      if (!blockNumber) {
+      if (!blockHash) {
         return;
       }
 
@@ -41,7 +41,7 @@ export function TransactionsProvider({
           return tx;
         }
 
-        if (tx.lastChecked >= blockNumber) {
+        if (tx.lastChecked === blockHash) {
           return tx;
         }
 
@@ -51,7 +51,7 @@ export function TransactionsProvider({
           const newTransaction: StoredTransaction = {
             ...tx,
             code: newStatus.tx_status,
-            lastChecked: blockNumber,
+            lastChecked: blockHash,
           };
           return newTransaction;
         } catch (error) {
@@ -74,7 +74,7 @@ export function TransactionsProvider({
     };
 
     updateTransactions();
-  }, [blockNumber, transactions]);
+  }, [blockHash, transactions]);
 
   return (
     <TransactionsContext.Provider

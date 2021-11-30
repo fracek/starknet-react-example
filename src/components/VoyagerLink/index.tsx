@@ -20,7 +20,7 @@ interface ContractLinkProps {
 }
 
 function ContractLink({ contract }: ContractLinkProps): JSX.Element {
-  const href = `https://voyager.online/contract/${contract}`;
+  const href = `https://goerli.voyager.online/contract/${contract}`;
   return <Link href={href}>{contract}</Link>;
 }
 
@@ -31,16 +31,16 @@ interface TransactionLinkProps {
 function TransactionLink({
   transactionHash,
 }: TransactionLinkProps): JSX.Element {
-  const href = `https://voyager.online/tx/${transactionHash}`;
+  const href = `https://goerli.voyager.online/tx/${transactionHash}`;
   return <Link href={href}>{transactionHash}</Link>;
 }
 
 interface BlockLinkProps {
-  block: number;
+  block: string;
 }
 
 function BlockLink({ block }: BlockLinkProps): JSX.Element {
-  const href = `https://voyager.online/block/${block}`;
+  const href = `https://goerli.voyager.online/block/${block}`;
   return <Link href={href}>{block}</Link>;
 }
 

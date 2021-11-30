@@ -5,7 +5,7 @@ import { useStarknet } from "../providers/StarknetProvider";
 import COUNTER from "./abi/counter.json";
 
 const ADDRESS =
-  "0x065db863a8d72f7260bdd438f7be7d14cc4778b7e362f82fc3b6b9eb04cb90b5";
+  "0x036486801b8f42e950824cba55b2df8cccb0af2497992f807a7e1d9abd2c6ba1";
 
 /**
  * Load the counter contract.
